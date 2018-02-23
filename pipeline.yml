@@ -30,4 +30,4 @@ jobs:
         trigger: true
       - put: docker-image
         params:
-          build: clnaddrbuild/centclnscr_dockfile
+          build: clnaddrbuild/dockerfile
