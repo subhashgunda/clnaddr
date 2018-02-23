@@ -1,0 +1,32 @@
+groups:
+  - name: main
+    jobs:
+      - build-image
+      
+resources:
+- name: clnaddrbuild
+  type: git
+  source:
+    branch: master
+    uri: https://github.com/subhashgunda/clnaddr.git
+    private_key: {{github_privatekey}}
+
+- name: docker-image
+  type: docker-image
+  source:
+    email: {{registry_email}}
+    username: {{registry_username}}
+    password: {{registry_password}}
+    repository: {{registry_repo}}
+    tag: {{tag}}
+
+jobs:
+  - name: build-image
+    public: true
+    serial: true
+    plan:
+      - get: clnaddrbuild
+        trigger: true
+      - put: docker-image
+        params:
+          build: clnaddrbuild/centclnscr_dockfile
