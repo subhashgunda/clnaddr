@@ -9,7 +9,8 @@ resources:
   source:
     branch: master
     uri: https://github.com/subhashgunda/clnaddr.git
-    private_key: {{github_privatekey}}
+    username: {{github_user}}
+    password: {{github_token}}
 
 - name: docker-image
   type: docker-image
