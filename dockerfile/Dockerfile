@@ -13,7 +13,7 @@ RUN /bin/bash -c 'wget https://runneredq.box.com/shared/static/vnhaocw8s1qtak3rk
 #ADD clean_address_dpv_unix.zip ./clean_address_dpv_unix.zip
 #RUN /bin/bash -c 'unzip -P ArrivedFlier37 clean_address_linux.zip -d ./clean_address_linux; unzip -P DestroyAcross55 clean_address_dpv_unix.zip'
 #RUN /bin/bash -c 'unzip -P ArrivedFlier37 clean_address_linux.zip; unzip -P DestroyAcross55 clean_address_dpv_unix.zip'
-RUN /bin/bash -c 'unzip -P ArrivedFlier37 clean_address_linux.zip'
+RUN /bin/bash -c 'unzip -P ArrivedFlier37 clean_address_linux.zip;chmod +x ./clean_address_linux/install.sh'
 
 RUN /bin/bash -c 'HOME='/clnaddr'; yes | ./clean_address_linux/install.sh'
 
