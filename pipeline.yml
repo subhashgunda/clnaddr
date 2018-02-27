@@ -22,6 +22,7 @@ resources:
     tag: {{tag}}
     client_certs: 
     - domain: {{registry_domain_name}}
+      insecure_registries: ["dev-registry.mckesson.com:443"]
       cert: {{cacertsfile}}
           
 jobs:
