@@ -20,7 +20,7 @@ resources:
     password: {{registry_password}}
     repository: {{registry_repo}}
     tag: {{tag}}
-    ca_certs: 
+    client_certs: 
     - domain: {{registry_domain_name}}
       cert: {{cacertsfile}}
           
