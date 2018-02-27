@@ -20,7 +20,8 @@ resources:
     password: {{registry_password}}
     repository: {{registry_repo}}
     tag: {{tag}}
-
+    ca_cert: {{cacertsfile}}
+          
 jobs:
   - name: build-image
     public: true
