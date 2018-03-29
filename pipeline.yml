@@ -19,12 +19,12 @@ resources:
     username: {{registry_username}}
     password: {{registry_password}}
     repository: {{registry_repo}}
+    insecure_registries: [ "dev-registry.mckesson.com:443" ]
     tag: {{tag}}
-    client_certs: 
+    ca_certs:
     - domain: {{registry_domain_name}}
-      insecure_registries: ["dev-registry.mckesson.com:443"]
       cert: {{cacertsfile}}
-          
+              
 jobs:
   - name: build-image
     public: true
