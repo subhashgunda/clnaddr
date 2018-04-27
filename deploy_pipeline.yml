@@ -40,8 +40,9 @@ jobs:
     plan:
       - get: clnaddrbuild
         trigger: true
+      - get: docker-image
       - put: pcfdev
         params:
-          manifest: clnaddrbuild
-          path: clnaddrbuild/manifests/manifest.yml
+          manifest: clnaddrbuild/manifests/manifest.yml
+          path: clnaddrbuild
           current_app_name: clnaddrgsr
