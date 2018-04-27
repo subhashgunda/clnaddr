@@ -1,0 +1,9 @@
+---
+#applications:
+#  - name: cleanadd
+
+disk_quota: 4096M
+health-check-type: port
+#health-check-http-endpoint: /CLNVerify
+#docker:
+#  image: dev-registry.mckesson.com/mms/cleanadd:centlst

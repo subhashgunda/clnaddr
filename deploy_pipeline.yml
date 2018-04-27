@@ -1,0 +1,47 @@
+groups:
+  - name: main
+    jobs:
+      - deploy-image
+      
+resources:
+- name: clnaddrbuild
+  type: git
+  source:
+    branch: master
+    uri: https://github.com/subhashgunda/clnaddr.git
+    username: {{github_user}}
+    password: {{github_token}}
+
+- name: docker-image
+  type: docker-image
+  source:
+    email: {{registry_email}}
+    username: {{registry_username}}
+    password: {{registry_password}}
+    repository: {{registry_repo}}
+    insecure_registries: [ "registry.mckesson.com:443" ]
+    tag: {{tag}}
+
+- name: pcfdev
+  type: cf
+  source:
+    api: {{deploy_api}}
+    organization: {{deploy_org}}
+    username: {{deploy_username}}
+    password: {{deploy_password}}
+    skip_cert_check: true
+    space: {{deploy_space}}
+ 
+
+jobs:
+  - name: deploy-image
+    public: true
+    serial: true
+    plan:
+      - get: clnaddrbuild
+        trigger: true
+      - put: pcfdev
+        params:
+          manifest: clnaddrbuild
+          path: clnaddrbuild/manifests/manifest.yml
+          current_app_name: clnaddrgsr
