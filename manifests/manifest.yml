@@ -1,9 +1,9 @@
 ---
-applications:
-  - name: clnaddrgsr
+#applications:
+#  - name: clnaddrgsr
 
 disk_quota: 5120M
 health-check-type: port
 #health-check-http-endpoint: /CLNVerify
-#docker:
-#  image: registry.mckesson.com/mms/cleanadd:latest
+docker:
+  image: registry.mckesson.com/mms/cleanadd:latest
