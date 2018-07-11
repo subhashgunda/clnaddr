@@ -9,18 +9,30 @@ resources:
   source:
     branch: master
     uri: https://github.com/subhashgunda/clnaddr.git
-    username: {{github_user}}
-    password: {{github_token}}
+    username: ((github_user))
+    password: ((github_token))
+
+- name: versioning
+  type: semver
+  source: 
+    driver: git
+    uri: git@github.com:subhashgunda/clnaddr.git
+    branch: version
+    file: version
+    private_key: ((github_rsapk))
+    initial_version: 1.0.0
+
+
 
 - name: docker-image
   type: docker-image
   source:
-    email: {{registry_email}}
-    username: {{registry_username}}
-    password: {{registry_password}}
-    repository: {{registry_repo}}
-    insecure_registries: [ "registry.mckesson.com:443" ]
-    tag: {{tag}}
+    email: ((registry_email))
+    username: ((registry_username))
+    password: ((registry_password))
+    repository: ((registry_repo))
+    #insecure_registries: [ "registry.mckesson.com:443" ]
+    
 
 jobs:
   - name: build-image
@@ -29,6 +41,10 @@ jobs:
     plan:
       - get: clnaddrbuild
         trigger: true
+      - get: versioning
+      - put: versioning
+        params: {bump: patch}
       - put: docker-image
         params:
           build: clnaddrbuild/dockerfile
+          tag: versioning/version
