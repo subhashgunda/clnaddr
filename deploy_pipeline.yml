@@ -12,16 +12,6 @@ resources:
     username: {{github_user}}
     password: {{github_token}}
 
-- name: docker-image
-  type: docker-image
-  source:
-    email: {{registry_email}}
-    username: {{registry_username}}
-    password: {{registry_password}}
-    repository: {{registry_repo}}
-    insecure_registries: [ "registry.mckesson.com:443" ]
-    tag: {{tag}}
-
 - name: pcfdev
   type: cf
   source:
@@ -40,7 +30,6 @@ jobs:
     plan:
       - get: clnaddrbuild
         trigger: true
-      - get: docker-image
       - put: pcfdev
         params:
           manifest: clnaddrbuild/manifests/manifest.yml

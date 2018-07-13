@@ -12,6 +12,12 @@ resources:
     username: ((github_user))
     password: ((github_token))
 
+
+platform: linux
+image_resource: downloadfiles
+  type: docker-image
+  source: {repository: busybox}
+
 - name: buildversion
   type: semver
   source: 
@@ -22,8 +28,6 @@ resources:
     private_key: ((github_rsapk))
     initial_version: 1.0.0
 
-
-
 - name: docker-image
   type: docker-image
   source:
@@ -33,14 +37,23 @@ resources:
     repository: ((registry_repo))
     #insecure_registries: [ "registry.mckesson.com:443" ]
     
-
 jobs:
   - name: build-image
     public: true
     serial: true
     plan:
+      - task: downloadfiles
       - get: clnaddrbuild
         trigger: true
+        config:
+          platform: linux
+          image_resource: downloadfiles
+            type: docker-image
+            source: {repository: busybox}
+          run:
+            file: clnaddrbuild/download.sh
+            outputs: fileoutput
+  
       - get: buildversion
       - put: buildversion
         params: {bump: patch}
@@ -48,3 +61,4 @@ jobs:
         params:
           build: clnaddrbuild/dockerfile
           tag: buildversion/version
+          inputs: fileoutput
