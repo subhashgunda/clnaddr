@@ -13,17 +13,17 @@ resources:
     password: ((github_token))
 
 
-platform: linux
-image_resource: downloadfiles
-  type: docker-image
-  source: {repository: busybox}
+#platform: linux
+#image_resource: downloadfiles
+#  type: docker-image
+#  source: {repository: busybox}
 
 - name: buildversion
   type: semver
   source: 
     driver: git
     uri: git@github.com:subhashgunda/clnaddr.git
-    branch: version
+    branch: master
     file: version
     private_key: ((github_rsapk))
     initial_version: 1.0.0
@@ -42,18 +42,25 @@ jobs:
     public: true
     serial: true
     plan:
-      - task: downloadfiles
       - get: clnaddrbuild
         trigger: true
+      - task: downloadfiles
         config:
           platform: linux
-          image_resource: downloadfiles
+          image_resource:
             type: docker-image
             source: {repository: busybox}
+          inputs:
+            - name: clnaddrbuild
           run:
-            file: clnaddrbuild/clnaddr/download.sh
-            outputs: fileoutput
-  
+            path: sh
+            args:
+            - -exec
+            - |
+              ls -lart
+              cd clnaddrbuild
+              ./download.sh
+
       - get: buildversion
       - put: buildversion
         params: {bump: patch}
@@ -61,4 +68,6 @@ jobs:
         params:
           build: clnaddrbuild/dockerfile
           tag: buildversion/version
-          inputs: fileoutput
+          inputs: 
+            - name: fileoutput
+
