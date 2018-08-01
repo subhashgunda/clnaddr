@@ -2,6 +2,7 @@ FROM centos:latest
 
 #Copy startscript.sh file from lcoal to the image
 ADD sample /sample
+ADD gsr.sh /gsr.sh
 
 #ENV PORT=8080
 #To install required utilities and create a dir for application
