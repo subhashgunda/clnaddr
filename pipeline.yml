@@ -59,7 +59,10 @@ jobs:
             - |
               ls -lart
               cd clnaddrbuild
-              ./download.sh
+              # ./download.sh
+              #cd /scratch/docker/tmp
+              #ls -lart
+              # cat gsr.sh
 
       - get: buildversion
       - put: buildversion
@@ -68,6 +71,4 @@ jobs:
         params:
           build: clnaddrbuild/dockerfile
           tag: buildversion/version
-          inputs: 
-            - name: fileoutput
 
