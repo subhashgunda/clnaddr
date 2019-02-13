@@ -8,4 +8,3 @@ dir=/clnaddr/bin
 source $dir/cron_profile
 exec $dir/clnaddrws clnaddrws.ini
 
-

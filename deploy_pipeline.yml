@@ -4,7 +4,7 @@ groups:
       - deploy-image
       
 resources:
-- name: clnaddrbuild
+- name: clnaddrgitfiles
   type: git
   source:
     branch: master
@@ -28,10 +28,10 @@ jobs:
     public: true
     serial: true
     plan:
-      - get: clnaddrbuild
+      - get: clnaddrgitfiles
         trigger: true
       - put: pcfdev
         params:
-          manifest: clnaddrbuild/manifests/manifest.yml
-          path: clnaddrbuild
+          manifest: clnaddrgitfiles/manifests/manifest.yml
+          path: clnaddrgitfiles
           current_app_name: clnaddrgsr

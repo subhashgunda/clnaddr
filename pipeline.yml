@@ -4,7 +4,7 @@ groups:
       - build-image
       
 resources:
-- name: clnaddrbuild
+- name: clnaddrgitfiles
   type: git
   source:
     branch: master
@@ -42,33 +42,13 @@ jobs:
     public: true
     serial: true
     plan:
-      - get: clnaddrbuild
+      - get: clnaddrgitfiles
         trigger: true
-      - task: downloadfiles
-        config:
-          platform: linux
-          image_resource:
-            type: docker-image
-            source: {repository: busybox}
-          inputs:
-            - name: clnaddrbuild
-          run:
-            path: sh
-            args:
-            - -exec
-            - |
-              ls -lart
-              cd clnaddrbuild
-              # ./download.sh
-              #cd /scratch/docker/tmp
-              #ls -lart
-              # cat gsr.sh
-
       - get: buildversion
       - put: buildversion
         params: {bump: patch}
       - put: docker-image
         params:
-          build: clnaddrbuild/dockerfile
+          build: clnaddrgitfiles/dockerfile
           tag: buildversion/version
 
