@@ -1,0 +1,78 @@
+### parameters file
+# usage: fly -t [targetname] set-pipeline -p [pipeline name] -c [pipeline file] --load-vars-from [thisfile.yml]
+#fly -t mckconcourse set-pipeline -p clnaddr -c pipeline.yml --load-vars-from properties.yml
+
+github_user: subhashgunda
+github_token: 4d501b4de343f3292f675817660a9f9b02e9d2b8
+github_rsapk: |
+  -----BEGIN RSA PRIVATE KEY-----
+  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
+  -----END RSA PRIVATE KEY-----
+
+
+registry_email: subhash.gunda@mckesson.com
+registry_username: en12bfb
+registry_password: Keepspirit123!
+registry_repo: registry.mckesson.com/mms/cleanadd
+#registry_email: subhash.gunda@mckesson.com
+#registry_username: subhashgunda
+#registry_password: McKesson123!
+#registry_repo: subhashgunda/dummy
+tag: gsrdate
+#cacertsfile: dev-registry.ca
+#registry_domain_name: dev-registry.mckesson.com:443
+
+deploy_api: api.sys.dev-west.paas.mckesson.com
+deploy_org: MMS Middleware
+deploy_username: en12bfb
+deploy_password: 
+deploy_space: gsr
+

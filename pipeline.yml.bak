@@ -1,0 +1,73 @@
+groups:
+  - name: main
+    jobs:
+      - build-image
+      
+resources:
+- name: clnaddrbuild
+  type: git
+  source:
+    branch: master
+    uri: https://github.com/subhashgunda/clnaddr.git
+    username: ((github_user))
+    password: ((github_token))
+
+
+#platform: linux
+#image_resource: downloadfiles
+#  type: docker-image
+#  source: {repository: busybox}
+
+- name: buildversion
+  type: semver
+  source: 
+    driver: git
+    uri: git@github.com:subhashgunda/clnaddr.git
+    branch: master
+    file: version
+    private_key: ((github_rsapk))
+    initial_version: 1.0.0
+
+- name: docker-image
+  type: docker-image
+  source:
+    email: ((registry_email))
+    username: ((registry_username))
+    password: ((registry_password))
+    repository: ((registry_repo))
+    #insecure_registries: [ "registry.mckesson.com:443" ]
+    
+jobs:
+  - name: build-image
+    public: true
+    serial: true
+    plan:
+      - get: clnaddrbuild
+        trigger: true
+      - task: downloadfiles
+        config:
+          platform: linux
+          image_resource:
+            type: docker-image
+            source: {repository: busybox}
+          inputs:
+            - name: clnaddrbuild
+          run:
+            path: sh
+            args:
+            - -exec
+            - |
+              ls -lart
+              ./clnaddrbuild/download.sh
+              #cd /scratch/docker/tmp
+              ls -laRt
+              # cat gsr.sh
+
+      - get: buildversion
+      - put: buildversion
+        params: {bump: patch}
+      - put: docker-image
+        params:
+          build: clnaddrbuild/dockerfile
+          tag: buildversion/version
+
