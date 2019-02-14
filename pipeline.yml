@@ -43,7 +43,7 @@ jobs:
     serial: true
     plan:
       - get: clnaddrgitfiles
-        trigger: true
+        trigger: false
       - get: buildversion
       - put: buildversion
         params: {bump: patch}
