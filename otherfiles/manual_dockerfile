@@ -1,0 +1,12 @@
+FROM registry.mckesson.com/mms/cleanadd:manual
+
+# Define Working dir
+WORKDIR /clnaddr/bin
+
+# Define health check command.
+HEALTHCHECK CMD curl http://localhost:8080/CLNVerify || exit 1
+
+USER clnaddr
+
+ENTRYPOINT ["/bin/bash", "-c", "/clnaddr/bin/startscript.sh"]
+

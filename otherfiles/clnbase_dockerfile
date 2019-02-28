@@ -1,0 +1,9 @@
+FROM ubuntu:latest
+
+ADD startscript.sh /startscript.sh
+
+#ENV PORT=8080
+#To install required utilities and create a dir for application
+RUN /bin/bash -c 'apt -y update; apt -y upgrade; apt -y dist-upgrade; echo "dash dash/sh boolean false" | debconf-set-selections; DEBIAN_FRONTEND=noninteractive dpkg-reconfigure dash; apt-get -y install wget; apt-get -y install unzip; apt-get install -y curl; mkdir /clnaddr; wget https://s3.runnertech.com/clnaddr/bi-monthly/clean_address_linux.zip -O clean_address_linux.zip; unzip -P MaybeFriends11 clean_address_linux.zip; rm -rf clean_address_linux.zip; cd /clean_address_linux; export TERM=xterm CLNADDR_HOME='/clnaddr' && yes 64-bit | ./install.sh; cd /; wget http://s3.runnertech.com/releases/5.0/clean_address_linux_latest.zip; unzip clean_address_linux_latest.zip; rm -rf /clean_address_linux_latest.zip; cd Release_5.0; yes /clnaddr | ./install.sh; cd /; rm -rf /Release_5.0; cd /; mv -f /clean_address_linux/bin64/* /clnaddr/bin; mv -f /clean_address_linux/datafiles/* /clnaddr/datafiles; mv -f /clean_address_linux/Release_5.0/bin/gcc41_64bit/* /clnaddr/bin; rm -rf /clean_address_linux; wget https://s3.runnertech.com/clnaddr/bi-monthly/clean_address_dpv_unix.zip -O clean_address_dpv_unix.zip; unzip -P TeachBeing86 clean_address_dpv_unix.zip; rm -rf clean_address_dpv_unix.zip; mv -f /clean_address_dpv/datafiles/* /clnaddr/datafiles; rm -rf clean_address_dpv; cd /; wget https://s3.runnertech.com/clnaddr/bi-monthly/clean_address_rbdi.zip; unzip -P RussiaAllow55 clean_address_rbdi.zip; rm -rf clean_address_rbdi.zip; mv -f /clean_address_rbdi/datafiles/* /clnaddr/datafiles; rm -rf  /clean_address_rbdi; chmod +x /clnaddr/bin/clnaddrws; mv -f /startscript.sh /clnaddr/bin/startscript.sh; chmod +x /clnaddr/bin/startscript.sh'
+
+
