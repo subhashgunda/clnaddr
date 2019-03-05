@@ -1,9 +1,15 @@
 ---
-#applications:
-#  - name: clnaddrgsr
+applications:
+  - name: gsrcln
 
 disk_quota: 5120M
 health-check-type: port
 #health-check-http-endpoint: /CLNVerify
+
+#env:
+#  PORT: 8080
+
 docker:
-  image: registry.mckesson.com/mms/cleanadd:latest
+  image: registry.mckesson.com/mms/cleanadd:noruncmd
+
+command: exec /clnaddr/bin/startscript.sh
